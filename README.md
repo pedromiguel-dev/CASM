@@ -1,4 +1,13 @@
 ## Assignment 1: Simple Calculator in Assembly
+### Tasks
+- [x] Display nice message to user
+- [x] Handle inputs of operations and operands
+- [ ] Handle invalid input
+- [ ] Clear console and display result
+- [x] Implement sum
+- [x] Implement sub
+- [x] Implement div
+- [x] Implement mul
 
 ### Dependencies
 
@@ -8,6 +17,8 @@
 * ld the GNU linker		- binutils
 
 ### How to run
+1. run `$ make`
+3. run `$ ./casm`
 
 ## About this assignmet
 ### Requirements:
