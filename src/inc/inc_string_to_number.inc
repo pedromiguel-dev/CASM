@@ -33,6 +33,5 @@ inc_string_to_number:
 	; Repeat the loop
     jmp loop_input
 
-
 	done_parse:
 	ret
