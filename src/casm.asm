@@ -1,5 +1,6 @@
 %include "inc/stdio.inc"
 %include "inc/inc_string_to_number.inc"
+%include "inc/inc_number_to_string.inc"
 
 section .data
   hello  db  "-----CALCULATOR-----",0xA,0
@@ -14,6 +15,7 @@ section .data
   invalid_num  db "this number is invalid please try again...",0xA,0
   invalid_num_size  equ $-invalid_num
   
+  divide equ 10
 section .bss
   calc  resb  14 ; one trillion why not
   calc_size  equ  14
@@ -21,8 +23,11 @@ section .bss
   expression  resb  2
   expression_size  equ 2
   
-  num_one  resb  1
-  num_two  resb  1
+  num_one  resb  12
+  num_two  resb  12
+  operation  resb 1
+  
+  result  resb 10000000000
   
   
 section .text
@@ -42,8 +47,11 @@ _start:
   call inc_print_console
 
   call choose_operation
-
   call get_input_numbers
+  call calculate
+  ;;number should be in eax
+  mov ebx, result
+  call inc_number_to_string
 
   call inc_exit
 	
@@ -57,7 +65,7 @@ choose_operation:
   get_oper:
   mov eax, expression
   call inc_string_to_number
-  mov [expression], eax
+  mov [operation], eax
   
   compare:
   cmp eax, 4
@@ -75,10 +83,10 @@ choose_operation:
   
 get_input_numbers:
   call read_number
-  mov  eax, num_one
+  mov  [num_one], eax
 
   call read_number
-  mov  eax, num_two
+  mov  [num_two], eax
   ret
   
 read_number:
@@ -88,4 +96,34 @@ read_number:
 	
   mov eax, calc
   call inc_string_to_number
+  ret
+  
+; TODO: calculate
+calculate:
+  mov eax, [num_one]
+  mov ebx, [num_two]
+  mov ecx, [operation]
+  
+  cmp ecx, 1
+  je _sum
+  cmp ecx, 2
+  je _sub
+  cmp ecx, 3
+  je _div
+  cmp ecx, 4
+  je _mul
+  ret
+  
+_sum:
+  add eax, ebx
+  ret
+_sub:
+  sub eax, ebx
+  ret
+_div:
+  cdq
+  idiv ebx
+  ret
+_mul:
+  add eax, ebx
   ret

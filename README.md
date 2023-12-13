@@ -1,5 +1,15 @@
 ## Assignment 1: Simple Calculator in Assembly
 
+### Dependencies
+
+* nasm
+* gcc
+* gdb (for debugging)
+* ld the GNU linker		- binutils
+
+### How to run
+
+## About this assignmet
 ### Requirements:
 
 * Implement a simple calculator program in assembly language that supports basic arithmetic operations (addition, subtraction, multiplication, and division).
