@@ -1,3 +1,4 @@
 *.o
 build/
-
+src/casm
+src/casm.o
