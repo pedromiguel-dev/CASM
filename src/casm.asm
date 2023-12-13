@@ -3,6 +3,9 @@
 %include "inc/inc_number_to_string.inc"
 
 section .data
+  clear_msg db "\033[2J", 0  ; ANSI escape code to clear the screen
+  clear_len equ $ - clear_msg  ; Calculate the length of the message
+  
   hello  db  "-----CALCULATOR-----",0xA,0
   hello_size  equ $-hello
   
@@ -20,14 +23,15 @@ section .bss
   calc  resb  14 ; one trillion why not
   calc_size  equ  14
 
-  expression  resb  2
-  expression_size  equ 2
+  expression  resb  64
+  expression_size  equ 64
   
   num_one  resb  12
   num_two  resb  12
   operation  resb 1
   
-  result  resb 10000000000
+  result_size  resb 32
+  result  resb 1
   
   
 section .text
@@ -49,9 +53,14 @@ _start:
   call choose_operation
   call get_input_numbers
   call calculate
-  ;;number should be in eax
+  
+  ; number should be in eax
   mov ebx, result
   call inc_number_to_string
+  
+  mov  ebx, eax ; eax has the size of the string
+  mov  eax, result
+  call inc_print_console
 
   call inc_exit
 	
