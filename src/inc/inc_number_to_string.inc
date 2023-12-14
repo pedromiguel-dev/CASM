@@ -35,6 +35,8 @@ inc_number_to_string:
   xor edi, edi
   xor esi, esi
   
+  cmp ecx, 1
+  je done
   inc_number_to_string_reverse_string_loop:
   mov al, [ebx + ecx - 1]
   mov dl, [ebx + esi]

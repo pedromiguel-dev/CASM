@@ -2,7 +2,8 @@
 ;  in:
 ;    eax: buffer pointer
 ;  out:
-;	 eax: number
+;	 eax: number or 0 if NAN
+;	 ebx: 0 or 1 if NAN
 inc_string_to_number:
 
 	; initialize registers
@@ -22,6 +23,8 @@ inc_string_to_number:
 	
 	; Convert ASCII to integer
     sub bl, 48
+	cmp bl, 9
+	jg  NAN
 	
 	; Multiply the current result by 10 (shift left by one decimal place)
 	imul eax, 10
@@ -32,6 +35,11 @@ inc_string_to_number:
 	
 	; Repeat the loop
     jmp loop_input
-
+	
+	NAN:
+	mov ebx, 1
+	ret
+	
 	done_parse:
+	xor ebx, ebx
 	ret
