@@ -2,8 +2,8 @@
 ### Tasks
 - [x] Display nice message to user
 - [x] Handle inputs of operations and operands
-- [ ] Handle invalid input
-- [ ] Clear console and display result
+- [x] Handle invalid input
+- [ ] Clear console and display result - idk how to implement this :P
 - [x] Implement sum
 - [x] Implement sub
 - [x] Implement div
