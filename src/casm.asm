@@ -26,18 +26,18 @@ section .data
 	divide equ 10
 	
 section .bss
-  calc  resb  14
-  calc_size  equ  14
-  
-  expression  resb  64
-  expression_size  equ 64
+	calc  resb  14
+	calc_size  equ  14
 
-  num_one  resb  12
-  num_two  resb  12
-  operation  resb 1
-  
-  result_size  resb 32
-  result  resb 1
+	expression  resb  64
+	expression_size  equ 64
+
+	num_one  resb  12
+	num_two  resb  12
+	operation  resb 1
+
+	result_size  resb 32
+	result  resb 1
   
   
 section .text
@@ -80,29 +80,29 @@ print_wellcome:
 	ret
 
 choose_operation:
-  mov eax, expression
-  mov ebx, expression_size
-  call inc_read_console 
-  ;eax has number of bytes read  
-  get_oper:
-  mov eax, expression
-  call inc_string_to_number
-  mov [operation], eax
+	mov eax, expression
+	mov ebx, expression_size
+	call inc_read_console 
 
-  compare:
-  cmp eax, 5
-  jg invalid_number
-  cmp eax, 1
-  jl invalid_number
-  ret
-  
-  invalid_number:
-  mov  eax, invalid_num
-  mov  ebx, invalid_num_size
-  call inc_print_console
-  
-  jmp choose_operation
-  ret
+	get_oper:
+	mov eax, expression
+	call inc_string_to_number
+	mov [operation], eax
+
+	compare:
+	cmp eax, 5
+	jg invalid_number
+	cmp eax, 1
+	jl invalid_number
+	ret
+
+	invalid_number:
+	mov  eax, invalid_num
+	mov  ebx, invalid_num_size
+	call inc_print_console
+
+	jmp choose_operation
+	ret
   
 get_input_numbers:	
 	first_number:
@@ -139,40 +139,39 @@ get_input_numbers:
 		ret
   
 read_number:
-  mov eax, calc
-  mov ebx, calc_size
-  call inc_read_console ; eax has number of bytes read
-	
-  mov eax, calc
-  call inc_string_to_number
-  ret
+	mov eax, calc
+	mov ebx, calc_size
+	call inc_read_console ; eax has number of bytes read
+
+	mov eax, calc
+	call inc_string_to_number
+	ret
   
-; TODO: calculate
 calculate:
-  mov eax, [num_one]
-  mov ebx, [num_two]
-  mov ecx, [operation]
-  
-  cmp ecx, 1
-  je _sum
-  cmp ecx, 2
-  je _sub
-  cmp ecx, 3
-  je _div
-  cmp ecx, 4
-  je _mul
-  ret
-  
-_sum:
-  add eax, ebx
-  ret
-_sub:
-  sub eax, ebx
-  ret
-_div:
-  cdq
-  idiv ebx
-  ret
-_mul:
-  imul eax, ebx
-  ret
+	mov eax, [num_one]
+	mov ebx, [num_two]
+	mov ecx, [operation]
+
+	cmp ecx, 1
+	je _sum
+	cmp ecx, 2
+	je _sub
+	cmp ecx, 3
+	je _div
+	cmp ecx, 4
+	je _mul
+	ret
+
+	_sum:
+	add eax, ebx
+	ret
+	_sub:
+	sub eax, ebx
+	ret
+	_div:
+	cdq
+	idiv ebx
+	ret
+	_mul:
+	imul eax, ebx
+	ret
